@@ -574,3 +574,17 @@ strong { color: var(--white); font-weight: 700; }
   .js .reveal { opacity: 1; transform: none; filter: none; }
   .particles, .scanline { display: none; }
 }
+
+/* ---------- Botão secundário (contorno dourado) ---------- */
+.btn-ghost {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; min-height: 54px; margin-top: 12px; padding: 0 16px;
+  border-radius: 12px; border: 1px solid var(--line-strong);
+  background: rgba(214, 170, 82, .06); color: var(--gold-light); text-decoration: none;
+  font-family: var(--f-display); font-weight: 700; font-size: clamp(11px, 3.1vw, 13px); letter-spacing: .08em; text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+}
+.btn-ghost:hover { background: rgba(214, 170, 82, .14); border-color: var(--gold); }
+.btn-ghost:hover .btn-gold__arrow { transform: translateX(4px); }
+.btn-ghost:active { transform: scale(.975); }

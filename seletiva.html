@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Seletiva de Atletas | ALPHA GOLD</title>
+  <meta name="description" content="Candidate-se ao time de atletas ALPHA GOLD. Preencha o formulário da seletiva.">
+  <meta name="theme-color" content="#050505">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/seletiva.css">
+</head>
+<body class="sel">
+  <main class="sel__wrap">
+    <a class="sel__back" href="/">← Voltar</a>
+    <img class="sel__logo" src="assets/img/logo-sm.webp" width="200" height="100" alt="ALPHA GOLD">
+    <h1 class="sel__title">SELETIVA DE <span class="gold-text">ATLETAS</span></h1>
+    <p class="sel__sub">Preencha o formulário para se candidatar ao time <strong class="gold-text">ALPHA GOLD</strong>.</p>
+
+    <form class="sel__form" id="form" novalidate>
+      <div class="field">
+        <label for="nome">Qual o seu nome?</label>
+        <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Nome completo" required>
+      </div>
+      <div class="field">
+        <label for="instagram">Qual o seu Instagram?</label>
+        <input id="instagram" name="instagram" type="text" autocomplete="off" autocapitalize="none" placeholder="@seuinstagram" required>
+      </div>
+      <div class="field">
+        <label for="whatsapp">Qual o seu WhatsApp?</label>
+        <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
+      </div>
+
+      <fieldset class="field">
+        <legend>Já usou ALPHA GOLD?</legend>
+        <div class="choice">
+          <label><input type="radio" name="jaUsou" value="sim" required><span>Sim</span></label>
+          <label><input type="radio" name="jaUsou" value="nao"><span>Não</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="alunos">Tem quantos alunos de consultoria ou personal?</label>
+        <input id="alunos" name="alunos" type="text" inputmode="numeric" placeholder="Ex: 15" required>
+      </div>
+
+      <fieldset class="field">
+        <legend>Trabalha com revenda?</legend>
+        <div class="choice">
+          <label><input type="radio" name="revenda" value="sim" required><span>Sim</span></label>
+          <label><input type="radio" name="revenda" value="nao"><span>Não</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field" data-revenda>
+        <label for="revendaMedia">Quanto revende em média por mês?</label>
+        <input id="revendaMedia" name="revendaMedia" type="text" inputmode="numeric" placeholder="Ex: R$ 3.000">
+      </div>
+      <div class="field" data-revenda>
+        <label for="produtosMes">Ganha quantos produtos por mês?</label>
+        <input id="produtosMes" name="produtosMes" type="text" placeholder="Ex: 5 produtos">
+      </div>
+      <div class="field" data-revenda>
+        <label for="prazoFornecedor">Em quanto tempo o seu fornecedor atual faz os envios?</label>
+        <input id="prazoFornecedor" name="prazoFornecedor" type="text" placeholder="Ex: 5 dias úteis">
+      </div>
+
+      <div class="field">
+        <label for="estado">Qual o seu estado?</label>
+        <input id="estado" name="estado" type="text" maxlength="2" autocapitalize="characters" autocomplete="address-level1" placeholder="Ex: SP" required>
+      </div>
+      <div class="field">
+        <label for="cidade">Qual a sua cidade?</label>
+        <input id="cidade" name="cidade" type="text" autocomplete="address-level2" placeholder="Ex: São Paulo" required>
+      </div>
+
+      <!-- honeypot -->
+      <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+      <p class="sel__error" id="error" role="alert" hidden></p>
+      <button class="btn-gold" type="submit" id="submit"><span>Enviar candidatura</span></button>
+    </form>
+
+    <div class="sel__done" id="done" hidden>
+      <h2 class="h2">Candidatura <span class="gold-text">enviada!</span></h2>
+      <p>Recebemos os seus dados. Nossa equipe entrará em contato pelo WhatsApp.</p>
+      <a class="btn-gold" href="/"><span>Voltar ao site</span></a>
+    </div>
+  </main>
+  <script src="assets/js/seletiva.js" defer></script>
+</body>
+</html>

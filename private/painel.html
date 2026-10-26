@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="dark">
+  <title>Painel | Seletiva ALPHA GOLD</title>
+  <style>
+    :root { --bg:#050505; --card:#121212; --line:rgba(214,170,82,.2); --gold:#d6aa52; --gold-l:#f3dc9a; --text:#cfcac1; --muted:#8b877f; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+    header { position:sticky; top:0; z-index:5; background:rgba(5,5,5,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:14px 16px; }
+    .bar { max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    h1 { font-size:16px; margin:0; color:#fff; letter-spacing:.04em; flex:1 1 200px; }
+    h1 b { color:var(--gold); }
+    input[type=search], select, button { height:40px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:#fff; font:inherit; padding:0 12px; }
+    input[type=search] { flex:1 1 200px; }
+    button { cursor:pointer; background:var(--gold); color:#0a0804; font-weight:700; border:0; }
+    button.ghost { background:var(--card); color:var(--gold-l); border:1px solid var(--line); }
+    main { max-width:1200px; margin:0 auto; padding:16px; }
+    .stats { color:var(--muted); font-size:13px; margin-bottom:12px; }
+    .stats b { color:#fff; }
+    .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); }
+    .lead { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
+    .lead h2 { margin:0 0 2px; font-size:17px; color:#fff; }
+    .lead time { color:var(--muted); font-size:12px; }
+    .tags { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+    .tag { font-size:12px; padding:2px 10px; border-radius:99px; border:1px solid var(--line); color:var(--gold-l); }
+    .tag.yes { background:rgba(214,170,82,.15); }
+    dl { margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:14px; }
+    dt { color:var(--muted); } dd { margin:0; color:#fff; word-break:break-word; }
+    a { color:var(--gold-l); }
+    .actions { display:flex; gap:8px; margin-top:12px; }
+    .actions a { flex:1; text-align:center; text-decoration:none; padding:8px; border:1px solid var(--line); border-radius:10px; font-size:13px; font-weight:600; }
+    .empty { text-align:center; padding:60px 0; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <header><div class="bar">
+    <h1>SELETIVA <b>ALPHA GOLD</b></h1>
+    <input type="search" id="q" placeholder="Buscar nome, @, cidade, estado…" aria-label="Buscar">
+    <select id="filtro" aria-label="Filtrar">
+      <option value="">Todos</option>
+      <option value="revenda">Trabalha com revenda</option>
+      <option value="usou">Já usou ALPHA GOLD</option>
+    </select>
+    <button class="ghost" id="reload" type="button">Atualizar</button>
+    <button id="csv" type="button">Exportar CSV</button>
+  </div></header>
+  <main>
+    <p class="stats" id="stats">Carregando…</p>
+    <div class="grid" id="grid"></div>
+  </main>
+  <script>
+  (function () {
+    var token = decodeURIComponent(location.pathname.split('/').filter(Boolean).pop() || '');
+    var all = [];
+    var grid = document.getElementById('grid'), stats = document.getElementById('stats');
+    var q = document.getElementById('q'), filtro = document.getElementById('filtro');
+
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    function fmtDate(iso) { return new Date(iso).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }); }
+    function yn(v) { return v === 'sim' ? 'Sim' : v === 'nao' ? 'Não' : '—'; }
+    function row(label, v) { return v ? '<dt>' + label + '</dt><dd>' + esc(v) + '</dd>' : ''; }
+
+    function visible() {
+      var t = q.value.trim().toLowerCase(), f = filtro.value;
+      return all.filter(function (l) {
+        if (f === 'revenda' && l.revenda !== 'sim') return false;
+        if (f === 'usou' && l.jaUsou !== 'sim') return false;
+        return !t || [l.nome, l.instagram, l.whatsapp, l.cidade, l.estado].join(' ').toLowerCase().indexOf(t) >= 0;
+      });
+    }
+
+    function render() {
+      var list = visible();
+      stats.innerHTML = '<b>' + list.length + '</b> de ' + all.length + ' candidaturas';
+      if (!list.length) { grid.innerHTML = '<p class="empty">Nenhuma candidatura encontrada.</p>'; return; }
+      grid.innerHTML = list.map(function (l) {
+        var ig = 'https://instagram.com/' + encodeURIComponent(l.instagram);
+        var wa = 'https://wa.me/55' + String(l.whatsapp).replace(/^55(?=\d{10,11}$)/, '').replace(/\D/g, '');
+        return '<article class="lead"><h2>' + esc(l.nome) + '</h2><time>' + fmtDate(l.createdAt) + '</time>' +
+          '<div class="tags"><span class="tag ' + (l.jaUsou === 'sim' ? 'yes' : '') + '">Já usou: ' + yn(l.jaUsou) + '</span>' +
+          '<span class="tag ' + (l.revenda === 'sim' ? 'yes' : '') + '">Revenda: ' + yn(l.revenda) + '</span></div>' +
+          '<dl>' + row('Instagram', '@' + l.instagram) + row('WhatsApp', l.whatsapp) + row('Alunos', l.alunos) +
+          row('Revende/mês', l.revendaMedia) + row('Produtos/mês', l.produtosMes) + row('Prazo fornecedor', l.prazoFornecedor) +
+          row('Local', l.cidade + ' - ' + l.estado) + '</dl>' +
+          '<div class="actions"><a href="' + wa + '" target="_blank" rel="noopener">WhatsApp</a><a href="' + ig + '" target="_blank" rel="noopener">Instagram</a></div></article>';
+      }).join('');
+    }
+
+    function load() {
+      stats.textContent = 'Carregando…';
+      fetch('/api/leads', { headers: { 'x-admin-token': token }, cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (j) { all = j.leads; render(); })
+        .catch(function () { stats.textContent = 'Erro ao carregar os dados.'; });
+    }
+
+    function csvCell(v) {
+      v = String(v == null ? '' : v);
+      if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; // evita injeção de fórmula no Excel
+      return '"' + v.replace(/"/g, '""') + '"';
+    }
+    document.getElementById('csv').onclick = function () {
+      var cols = ['createdAt','nome','instagram','whatsapp','jaUsou','alunos','revenda','revendaMedia','produtosMes','prazoFornecedor','estado','cidade'];
+      var lines = [cols.join(',')].concat(visible().map(function (l) { return cols.map(function (c) { return csvCell(l[c]); }).join(','); }));
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'seletiva-alpha-gold.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    };
+    document.getElementById('reload').onclick = load;
+    q.oninput = filtro.onchange = render;
+    load();
+  })();
+  </script>
+</body>
+</html>

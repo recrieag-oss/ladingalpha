@@ -1,0 +1,43 @@
+/* Seletiva de atletas — reutiliza tokens e .btn-gold de styles.css */
+.sel { padding-bottom: 0; }
+.sel__wrap { max-width: 480px; margin: 0 auto; padding: 24px var(--gutter) calc(48px + var(--safe-b)); }
+.sel__back { display: inline-block; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 8px; }
+.sel__back:hover { color: var(--gold-light); }
+.sel__logo { width: 120px; margin: 0 auto 14px; }
+.sel__title { font-family: var(--f-display); font-size: clamp(24px, 7vw, 32px); text-align: center; color: var(--white); letter-spacing: .02em; }
+.sel__sub { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 30px; }
+.sel__sub strong { color: inherit; }
+
+.field { border: 0; padding: 0; margin: 0 0 22px; min-width: 0; }
+.field > label, .field > legend { display: block; padding: 0; margin-bottom: 10px; font-size: 14px; font-weight: 700; color: var(--white); }
+.field input[type="text"], .field input[type="tel"] {
+  width: 100%; height: 54px; padding: 0 16px;
+  background: var(--graphite-2); color: var(--white);
+  border: 1px solid rgba(255,255,255,.08); border-radius: 12px;
+  font: inherit; font-size: 16px; /* 16px evita zoom no iOS */
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input::placeholder { color: #6f6b64; }
+.field input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(214,170,82,.18); }
+.field.is-invalid input[type="text"], .field.is-invalid input[type="tel"] { border-color: #e5484d; }
+.field.is-invalid > label, .field.is-invalid > legend { color: #ff8a8e; }
+.field[hidden] { display: none; }
+
+.choice { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.choice label { position: relative; cursor: pointer; }
+.choice input { position: absolute; opacity: 0; inset: 0; }
+.choice span {
+  display: flex; align-items: center; justify-content: center; height: 48px;
+  background: var(--graphite-2); border: 1px solid rgba(255,255,255,.08); border-radius: 12px;
+  color: var(--white); font-weight: 700; font-size: 15px; transition: all .2s;
+}
+.choice input:checked + span { background: var(--gold-metal); color: #0a0804; border-color: transparent; }
+.choice input:focus-visible + span { outline: 2px solid var(--gold-light); outline-offset: 2px; }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.sel__error { color: #ff8a8e; font-size: 14px; font-weight: 600; text-align: center; margin: 0 0 14px; }
+.sel__form .btn-gold { border: 0; cursor: pointer; margin-top: 8px; }
+.sel__form .btn-gold[disabled] { opacity: .6; cursor: wait; }
+.sel__done { text-align: center; padding-top: 40px; }
+.sel__done p { margin: 16px 0 28px; }
+.sel__done[hidden], .sel__error[hidden], .sel__form[hidden] { display: none; }

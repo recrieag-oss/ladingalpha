@@ -1,5 +1,11 @@
 {
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/painel/:token", "destination": "/api/painel?token=:token" }
+  ],
+  "functions": {
+    "api/painel.js": { "includeFiles": "private/**" }
+  },
   "headers": [
     {
       "source": "/assets/(.*)",
