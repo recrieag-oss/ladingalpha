@@ -576,7 +576,7 @@ strong { color: var(--white); font-weight: 700; }
 }
 
 /* ---------- Botão seleção de atletas (variação do .btn-gold) ---------- */
-.btn-gold--seletiva { --shine-delay: 3.4s; margin-top: 14px; }
+.btn-gold--seletiva { --shine-delay: 3.4s; margin-top: 26px; }
 .btn-gold--seletiva::after { /* selo "vagas abertas" */
   content: "Vagas abertas"; position: absolute; top: 0; right: 0;
   padding: 2px 9px 3px; border-bottom-left-radius: 10px;
